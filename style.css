@@ -1,0 +1,361 @@
+/* Colours and spacing: every theme value lives here as a variable */
+:root {
+  --bg: #FFF6C9;
+  --surface: #FFFFFF;
+  --ink: #2B2623;
+  --muted: #5A504A;
+  --line: #D9CC8F;
+  --hl: #FFE27A;
+  --accent: #F4B6C8;
+  --accent-hover: #EC9BB4;
+  --on-accent: #2B2623;
+  --paper: #FFFFFF;
+  --paper-ink: #2B2623;
+  --veil: rgba(255, 246, 201, 0.82);
+  --gap-s: 8px;
+  --gap-m: 24px;
+  --gap-l: 56px;
+  --edge: 24px;
+}
+
+/* Dark theme: ticking the checkbox in the header flips these variables */
+:root:has(#theme:checked) {
+  --bg: #1E1A18;
+  --surface: #2A2522;
+  --ink: #FBF4E4;
+  --muted: #CFC4B6;
+  --line: #4A413B;
+  --hl: #5C4B14;
+  --veil: rgba(30, 26, 24, 0.78);
+}
+
+/* Element selectors: base text, headings, images and links */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Lato", sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+h1, h2, h3 {
+  font-family: "Playfair Display", serif;
+  line-height: 1.2;
+  margin: var(--gap-m) 0 var(--gap-s);
+}
+h1 { font-size: clamp(2.6rem, 8vw, 4.5rem); margin-top: 0; }
+h2 { font-size: clamp(1.9rem, 5vw, 2.6rem); margin-top: 0; }
+h3 { font-size: 1.3rem; }
+p, li { max-width: 68ch; margin: 0 0 var(--gap-s); }
+img { display: block; max-width: 100%; height: auto; }
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+a:focus-visible,
+#theme:focus-visible + .theme-label {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* Utility class: hides the checkbox but keeps it reachable by keyboard */
+.visually-hidden {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Header: the light and dark theme switch */
+header {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--gap-s) var(--edge);
+}
+.theme-label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  cursor: pointer;
+}
+.theme-label:hover { border-color: var(--ink); }
+#theme:checked + .theme-label { background: var(--ink); color: var(--bg); }
+
+/* Navigation bar (flexbox): small tags that jump to each section */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap-s);
+  padding: var(--gap-s) var(--edge);
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.nav-link:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+/* Sections: shared width and spacing */
+section {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: var(--gap-l) var(--edge);
+  scroll-margin-top: 96px;
+}
+
+/* Buttons: the accent colour is used only here and on link underlines */
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap-s);
+}
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+.button:hover { background: var(--accent-hover); }
+.button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+/* First screen (#hero): name in the middle, doodle stickers either side */
+#hero { text-align: center; padding-top: var(--gap-m); }
+#hero p { margin-left: auto; margin-right: auto; }
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 2fr) 1fr;
+  gap: var(--gap-m);
+  align-items: center;
+}
+.stickers { display: flex; flex-direction: column; gap: var(--gap-m); }
+.sticker { width: clamp(80px, 12vw, 130px); margin: 0 auto; }
+.tilt-l { transform: rotate(-5deg); }
+.tilt-r { transform: rotate(4deg); }
+.tagline {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+  margin: var(--gap-s) auto var(--gap-m);
+}
+
+/* About (#about): story on the left, photo on the right */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--gap-l);
+  align-items: start;
+}
+.beat { display: flex; gap: var(--gap-m); align-items: flex-start; margin-bottom: var(--gap-m); }
+.beat h3 { margin-top: 0; }
+.mini { width: 64px; flex: none; transform: rotate(-4deg); }
+.hl { background: linear-gradient(transparent 55%, var(--hl) 55%); padding: 0 2px; }
+.polaroid {
+  margin: 0;
+  padding: 12px 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  transform: rotate(2deg);
+}
+.polaroid img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+figcaption { margin-top: var(--gap-s); font-size: 0.95rem; color: var(--muted); }
+
+/* Skills (#skills): each skill is followed by what I did to earn it */
+.proof { list-style: none; padding: 0; margin: 0; }
+.proof li { margin-bottom: var(--gap-m); }
+
+/* Work (#work): flat cards in a responsive grid */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--gap-m);
+  margin-bottom: var(--gap-m);
+}
+.card { margin: 0; padding: var(--gap-s); background: var(--surface); border: 1px solid var(--line); }
+.card img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.case { padding: var(--gap-m); }
+.case h3 { margin-top: 0; }
+
+/* Resume (#resume): a white sheet that looks like a paper page */
+.download { margin: var(--gap-m) 0; }
+.sheet {
+  max-width: 794px;
+  margin: 0 auto;
+  padding: 40px;
+  background: var(--paper);
+  color: var(--paper-ink);
+  border: 1px solid var(--line);
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+.sheet h3 { font-size: 1.1rem; margin: var(--gap-m) 0 var(--gap-s); }
+.sheet .resume-name { font-size: 1.9rem; margin-top: 0; }
+.sheet ul { padding-left: 20px; margin: 0 0 var(--gap-s); }
+
+/* Contact (#contact) and footer */
+#contact { text-align: center; }
+#contact p { margin-left: auto; margin-right: auto; }
+footer { padding: var(--gap-l) var(--edge); text-align: center; color: var(--muted); }
+.quote { font-family: "Playfair Display", serif; font-style: italic; font-size: 1.2rem; color: var(--ink); }
+
+/* Phone layout: one column, text first, stickers in a row */
+@media (max-width: 699px) {
+  .hero-grid, .about-grid { grid-template-columns: 1fr; }
+  .hero-text { order: -1; }
+  .stickers { flex-direction: row; justify-content: center; }
+  .sheet { padding: var(--gap-m); }
+}
+
+/* Print: only the resume, on one A4 page, black text on white */
+@page { size: A4; margin: 14mm; }
+@media print {
+  header, nav, footer, .scroll-cat, .ender, section:not(#resume), .download, #resume > h2 { display: none; }
+  body { background: #fff; color: #000; font-size: 10pt; }
+  #resume { padding: 0; max-width: none; }
+  .sheet { border: 0; padding: 0; color: #000; font-size: 9.5pt; line-height: 1.3; }
+  .sheet h3 { margin: 10px 0 4px; }
+}
+
+/* Motion: switch the button colour fade off for people who ask for less motion */
+@media (prefers-reduced-motion: reduce) {
+  .button { transition: none; }
+}
+
+/* Cute pixel cursor in soft pink (cursor.png) */
+html, a, label, summary, .button, .theme-label { cursor: url("cursor.png") 0 0, auto; }
+
+/* Starry Night painting behind the first screen, softened so the text stays readable */
+#hero {
+  background: linear-gradient(var(--veil), var(--veil)), url("starry-night.jpg") center / cover;
+  border-radius: 24px;
+  margin-top: var(--gap-m);
+}
+
+/* Metallic star sticker under the name and line-art stickers */
+.metal-star { display: block; width: 56px; margin: var(--gap-s) auto 0; transform: rotate(-8deg); }
+.line-sticker { width: 72px; margin: 0 auto; }
+
+/* Envelope (#about): a details element that opens with a click, no scripts */
+.envelope summary {
+  position: relative;
+  display: block;
+  min-height: 200px;
+  padding: 110px var(--gap-m) var(--gap-m);
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  list-style: none;
+}
+.envelope summary::-webkit-details-marker { display: none; }
+.envelope summary::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 90px;
+  background: var(--accent);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.seal {
+  position: absolute;
+  top: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent-hover);
+  color: var(--on-accent);
+}
+.open-text, .envelope[open] .closed-text, .envelope[open] .seal, .envelope[open] summary::before { display: none; }
+.envelope[open] .open-text { display: inline; }
+.envelope[open] summary { min-height: 0; padding-top: var(--gap-m); }
+.letter { margin-top: var(--gap-m); padding: var(--gap-m); background: var(--surface); border: 1px solid var(--line); }
+
+/* Stamp edges on the handmade pieces */
+.stamp {
+  padding: 14px;
+  border: 0;
+  -webkit-mask: radial-gradient(circle 6px at 6px 6px, #0000 98%, #000) -6px -6px / 12px 12px;
+  mask: radial-gradient(circle 6px at 6px 6px, #0000 98%, #000) -6px -6px / 12px 12px;
+}
+
+/* Ransom-note heading: every letter cut from a different magazine */
+.ransom span { display: inline-block; margin: 0 2px; padding: 0 6px; line-height: 1.3; }
+.ransom .gap { margin-right: 14px; }
+.ransom span:nth-child(4n+1) { font-family: Georgia, serif; background: #FFFFFF; color: #2B2623; transform: rotate(-3deg); }
+.ransom span:nth-child(4n+2) { font-family: "Courier New", monospace; background: var(--accent); color: #2B2623; transform: rotate(2deg); }
+.ransom span:nth-child(4n+3) { font-family: Impact, "Arial Black", sans-serif; background: #2B2623; color: #FFE27A; transform: rotate(-1deg); }
+.ransom span:nth-child(4n) { font-family: "Playfair Display", serif; font-style: italic; background: var(--hl); color: #2B2623; }
+
+/* Cat that walks along the bottom of the screen as you scroll (CSS scroll animation) */
+.scroll-cat {
+  position: fixed;
+  bottom: 8px;
+  left: 2%;
+  width: 56px;
+  z-index: 6;
+  pointer-events: none;
+  animation: cat-walk linear both;
+  animation-timeline: scroll(root);
+}
+@keyframes cat-walk { from { left: 2%; } to { left: calc(98% - 56px); } }
+@supports not (animation-timeline: scroll()) { .scroll-cat { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .scroll-cat { animation: none; } }
+
+/* Page ender: a stamped sign-off with stickers either side */
+.ender { display: flex; align-items: center; justify-content: center; gap: var(--gap-m); padding: var(--gap-m) var(--edge); }
+.ender p {
+  margin: 0;
+  padding: var(--gap-s) var(--gap-m);
+  border: 3px double var(--ink);
+  font-family: "Playfair Display", serif;
+  font-size: 1.2rem;
+  transform: rotate(-3deg);
+}
+body {
+  background-image: radial-gradient(rgba(128, 128, 128, 0.22) 1.2px, transparent 1.2px);
+  background-size: 20px 20px;
+}
+img[src*="doodle-"],
+img[src*="sticker-"] {
+  transition: transform 0.25s ease;
+}
+
+img[src*="doodle-"]:hover,
+img[src*="sticker-"]:hover {
+  transform: scale(1.12) rotate(-6deg);
+}
